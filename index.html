@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yoisaki Residence</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: white;
+            color: black;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+        }
+        
+        .main-text {
+            max-width: 600px;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            white-space: pre-line;
+        }
+        
+        .password-section {
+            margin-top: 20px;
+        }
+        
+        .password-label {
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        #passwordInput {
+            padding: 8px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        
+        #submitBtn {
+            padding: 8px 16px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        #submitBtn:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .error-message {
+            color: red;
+            margin-top: 10px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .error-message.show {
+            opacity: 1;
+        }
+        
+        .success-page {
+            display: none;
+        }
+        
+        .fade-out {
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
+        }
+        
+        .fade-in {
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
+        }
+        
+        .fade-in.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div id="loginPage">
+        <div class="main-text">(YOISAKI RESIDENCE, XX/XX/20XX)
+
+...
+
+yoisaki-san? are you home?
+no answer... her phone's going to voicemail.
+I guess i'll keep the place clean while she's gone.
+...w-wha..? there's a light coming from her room.
+seems she's left her computer on..
+maybe there's something on here that will tell us where she's gone...?
+i... i hate to snoop, but...</div>
+        
+        <div class="password-section">
+            <div class="password-label">[ PLEASE INPUT PASSWORD. ]</div>
+            <input type="password" id="passwordInput" placeholder="">
+            <br>
+            <button id="submitBtn" onclick="checkPassword()">Submit</button>
+            <div id="errorMessage" class="error-message">Incorrect password input</div>
+        </div>
+    </div>
+    
+    <div id="successPage" class="success-page fade-in">
+        <div class="main-text">Log-in successful.</div>
+    </div>
+    
+    <script>
+        function checkPassword() {
+            const passwordInput = document.getElementById('passwordInput');
+            const errorMessage = document.getElementById('errorMessage');
+            const loginPage = document.getElementById('loginPage');
+            const successPage = document.getElementById('successPage');
+            
+            const enteredPassword = passwordInput.value;
+            const correctPassword = '';
+            
+            if (enteredPassword === correctPassword) {
+                // Fade out login page
+                loginPage.classList.add('fade-out');
+                
+                // After fade out completes, show success page with fade in
+                setTimeout(() => {
+                    loginPage.style.display = 'none';
+                    successPage.style.display = 'block';
+                    
+                    // Trigger fade in after a small delay to ensure display change is processed
+                    setTimeout(() => {
+                        successPage.classList.add('show');
+                    }, 50);
+                }, 800); // Match the transition duration
+            } else {
+                // Show error message temporarily
+                errorMessage.classList.add('show');
+                passwordInput.value = ''; // Clear the input
+                
+                // Hide error message after 3 seconds
+                setTimeout(() => {
+                    errorMessage.classList.remove('show');
+                }, 3000);
+            }
+        }
+        
+        // Allow Enter key to submit password
+        document.getElementById('passwordInput').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                checkPassword();
+            }
+        });
+    </script>
+</body>
+</html>
